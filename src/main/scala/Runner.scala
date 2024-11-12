@@ -1,28 +1,40 @@
 package aoc
 
+import cats.Show
 import cats.effect.{IO, IOApp}
 import cats.syntax.all.*
 
 import java.time.Duration
 
 object Runner extends IOApp.Simple:
-  val solutions = Map(
+  val year = 2023
+
+  val solutionsByDay = Map(
     1 -> Day1
   )
 
-  override def run: IO[Unit] = solveAllDays
+  override def run: IO[Unit] =
+    for
+      token <- IO.fromOption(sys.env.get("AOC_TOKEN"))(new Exception("missing AOC_TOKEN env var"))
+      downloader = InputDownloader.default(token)
+      _ <- solveAllDays(downloader)
+    yield ()
 
-  def solveAllDays: IO[Unit] = (1 to 25)
-    .flatMap(day => solutions.get(day).map(day -> _))
-    .toList
-    .traverse: (day, solution) =>
-      runSolution(solution).flatMap: parts =>
-        IO.println(s"day $day:") >> parts.traverse:
-          case (part, (result, duration)) =>
-            IO.println(s"\tpart $part:\n\t\tanswer\t= $result\n\t\truntime\t= ${duration.toNanos / 1000000d}ms")
-    .void
+  def solveAllDays(inputDownloader: InputDownloader): IO[Unit] =
+    (1 to 25)
+      .flatMap: day =>
+        solutionsByDay.get(day).tupleLeft(day)
+      .toList
+      .traverse: (day, solution) =>
+        for
+          _     <- IO.println(s"- day $day ---------------------------------")
+          input <- inputDownloader.download(year, day)
+          parts <- runSolution(solution, input)
+          _     <- parts.traverse(showResult)
+        yield ()
+      .void
 
-  def runSolution[A](solution: Solution[_, A]) =
+  def runSolution[A](solution: Solution[_, A], input: String): IO[List[(Int, (A, Duration))]] =
     val input  = "a"
     val parsed = solution.parse(input)
 
@@ -40,3 +52,10 @@ object Runner extends IOApp.Simple:
         .recover:
           case _: NotImplementedError =>
             none
+
+  def showResult[A: Show](result: (Int, (A, Duration))): IO[Unit] =
+    val (part, (answer, duration)) = result
+    IO.println(show"\tpart $part:") >>
+      IO.println(show"\t\tanswer\t= $answer") >>
+      IO.println(show"\t\truntime\t= ${duration.toNanos / 1000000d}ms") >>
+      IO.println("\n\n")
