@@ -1,37 +1,59 @@
-.DS_Store
 *.class
 *.log
-*~
 
 # sbt specific
+.cache
+.history
+.lib/
 dist/*
 target/
 lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
-project/local-plugins.sbt
-.history
-.bsp
-.metals
-.bloop
+**/.bloop
+.bsp/
 
 # Scala-IDE specific
 .scala_dependencies
-.cache
-.classpath
-.project
-.settings
-classes/
+.worksheet
 
-# idea
 .idea
-.idea_modules
-/.worksheet/
 
-# Dotty-IDE
-.dotty-ide-artifact
-.dotty-ide.json
+# ENSIME specific
+.ensime_cache/
+.ensime
 
-# Visual Studio Code
-.vscode
+.metals/
+.ammonite/
+metals.sbt
+metals/project/
+
+.vscode/
+
+local.*
+
+.DS_Store
+
+node_modules
+
+lib/core/metadata.js
+lib/core/MetadataBlog.js
+
+website/translated_docs
+website/build/
+website/node_modules
+website/i18n/*
+!website/i18n/en.json
+website/.docusaurus
+website/.cache-loader
+
+project/metals.sbt
+coursier
+
+# Scala CLI
+
+.scala-build/
+
+# Sourcegraph specific
+index.scip

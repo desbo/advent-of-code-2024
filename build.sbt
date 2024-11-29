@@ -7,7 +7,7 @@ lazy val root = (project in file("."))
     name             := "aoc-runner",
     idePackagePrefix := Some("aoc"),
     libraryDependencies := Seq(
-      "org.typelevel"                 %% "cats-effect" % "3.5.5",
+      "org.typelevel"                 %% "cats-effect" % "3.5.7",
       "com.softwaremill.sttp.client3" %% "core"        % "3.10.1",
       "com.lihaoyi"                   %% "os-lib"      % "0.11.3"
     ),
