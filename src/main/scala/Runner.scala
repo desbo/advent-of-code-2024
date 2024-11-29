@@ -35,7 +35,6 @@ object Runner extends IOApp.Simple:
       .void
 
   def runSolution[A](solution: Solution[_, A], input: String): IO[List[(Int, (A, Duration))]] =
-    val input  = "a"
     val parsed = solution.parse(input)
 
     def runPart(partNum: Int) =
