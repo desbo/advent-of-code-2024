@@ -1,5 +1,6 @@
 package aoc
 
+import twentyfour.Day1
 import cats.Show
 import cats.effect.{IO, IOApp}
 import cats.syntax.all.*
@@ -7,7 +8,7 @@ import cats.syntax.all.*
 import java.time.Duration
 
 object Runner extends IOApp.Simple:
-  val year = 2023
+  val year = 2024
 
   val solutionsByDay = Map(
     1 -> Day1
