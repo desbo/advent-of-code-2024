@@ -1,15 +1,13 @@
 package aoc
 package twentyfour
 
-object Day1 extends Solution[List[(Int, Int)], Long] {
+object Day1 extends Solution[List[(Int, Int)], Long]:
   override def parse(input: String): List[(Int, Int)] =
-    input
-      .split('\n')
-      .map { line =>
+    input.linesIterator
+      .map: line =>
         line.split("   ").toList match
           case List(l, r) => (l.toInt, r.toInt)
           case other      => sys.error(other.mkString(""))
-      }
       .toList
 
   override def part1(input: List[(Int, Int)]): Long =
@@ -32,4 +30,3 @@ object Day1 extends Solution[List[(Int, Int)], Long] {
       .map(_._1)
       .foldLeft(0): (sum, loc) =>
         sum + (loc * counts.getOrElse(loc, 0))
-}

@@ -12,7 +12,7 @@ object Runner extends IOApp.Simple:
   val year = 2024
 
   val solutionsByDay = Map(
-//    1 -> Day1,
+    1 -> Day1,
     2 -> Day2
   )
 
@@ -29,6 +29,8 @@ object Runner extends IOApp.Simple:
         solutionsByDay.get(day).tupleLeft(day)
       .toList
       .traverse: (day, solution) =>
+        import solution.given
+
         for
           _     <- IO.println(s"- day $day ---------------------------------")
           input <- inputDownloader.download(year, day)
@@ -37,7 +39,7 @@ object Runner extends IOApp.Simple:
         yield ()
       .void
 
-  def runSolution[A: Show](solution: Solution[_, A], input: String): IO[List[(Int, (String, Duration))]] =
+  def runSolution[A](solution: Solution[_, A], input: String): IO[List[(Int, (A, Duration))]] =
     val parsed = solution.parse(input)
 
     def runPart(partNum: Int) =
@@ -46,7 +48,7 @@ object Runner extends IOApp.Simple:
         result <- IO(if (partNum == 1) solution.part1(parsed) else solution.part2(parsed))
 
         end <- IO.realTimeInstant
-      yield (result.show, Duration.between(start, end))
+      yield (result, Duration.between(start, end))
 
     List(1, 2).traverseFilter: num =>
       runPart(num)
