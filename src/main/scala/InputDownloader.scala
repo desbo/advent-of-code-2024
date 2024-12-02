@@ -2,9 +2,9 @@ package aoc
 
 import cats.effect.IO
 import cats.syntax.all.*
-import sttp.client3.{SimpleHttpClient, SttpBackend, UriContext}
-import sttp.client3.quick.*
 import os.*
+import sttp.client3.quick.*
+import sttp.client3.{SimpleHttpClient, UriContext}
 
 trait InputDownloader:
   def download(year: Int, day: Int): IO[String]

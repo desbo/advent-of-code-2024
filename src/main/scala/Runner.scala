@@ -12,7 +12,7 @@ object Runner extends IOApp.Simple:
   val year = 2024
 
   val solutionsByDay = Map(
-    1 -> Day1,
+//    1 -> Day1,
     2 -> Day2
   )
 
@@ -37,7 +37,7 @@ object Runner extends IOApp.Simple:
         yield ()
       .void
 
-  def runSolution[A](solution: Solution[_, A], input: String): IO[List[(Int, (String, Duration))]] =
+  def runSolution[A: Show](solution: Solution[_, A], input: String): IO[List[(Int, (String, Duration))]] =
     val parsed = solution.parse(input)
 
     def runPart(partNum: Int) =
@@ -46,7 +46,7 @@ object Runner extends IOApp.Simple:
         result <- IO(if (partNum == 1) solution.part1(parsed) else solution.part2(parsed))
 
         end <- IO.realTimeInstant
-      yield (show"$result", Duration.between(start, end))
+      yield (result.show, Duration.between(start, end))
 
     List(1, 2).traverseFilter: num =>
       runPart(num)
