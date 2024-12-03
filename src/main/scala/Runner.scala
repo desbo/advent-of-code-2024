@@ -36,6 +36,7 @@ object Runner extends IOApp.Simple:
           input <- inputDownloader.download(year, day)
           parts <- runSolution(solution, input)
           _     <- parts.traverse(showResult)
+          _     <- IO.println("")
         yield ()
       .void
 
@@ -61,5 +62,4 @@ object Runner extends IOApp.Simple:
     val (part, (answer, duration)) = result
     IO.println(show"\tpart $part:") >>
       IO.println(show"\t\tanswer\t= $answer") >>
-      IO.println(show"\t\truntime\t= ${duration.toNanos / 1000000d}ms") >>
-      IO.println("\n\n")
+      IO.println(show"\t\truntime\t= ${duration.toNanos / 1e+6}ms")
