@@ -1,7 +1,6 @@
 package aoc
 
 import twentyfour.{Day1, Day2, Day3}
-
 import cats.Show
 import cats.effect.{IO, IOApp}
 import cats.syntax.all.*

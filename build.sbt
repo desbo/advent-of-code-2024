@@ -4,8 +4,7 @@ ThisBuild / scalaVersion := "3.3.3"
 
 lazy val root = (project in file("."))
   .settings(
-    name             := "aoc-runner",
-    idePackagePrefix := Some("aoc"),
+    name := "aoc-runner",
     libraryDependencies := Seq(
       "org.typelevel"                 %% "cats-effect" % "3.5.7",
       "com.softwaremill.sttp.client3" %% "core"        % "3.10.1",
