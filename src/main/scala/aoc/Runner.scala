@@ -1,6 +1,6 @@
 package aoc
 
-import twentyfour.{Day1, Day2, Day3}
+import twentyfour.*
 import cats.Show
 import cats.effect.{IO, IOApp}
 import cats.syntax.all.*
@@ -13,7 +13,8 @@ object Runner extends IOApp.Simple:
   val solutionsByDay = Map(
     1 -> Day1,
     2 -> Day2,
-    3 -> Day3
+    3 -> Day3,
+    4 -> Day4
   )
 
   override def run: IO[Unit] =
