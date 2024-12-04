@@ -33,3 +33,28 @@ object Day4 extends Solution[List[String], Int]:
           case (c, (char, x)) =>
             if char == 'X' then c + count(input, allDirections, x, y, "XMAS")
             else c
+
+  override def part2(input: List[String]): Int =
+    val allOffsets = List(
+      List((-1, -1), (1, 1)),
+      List((-1, 1), (1, -1))
+    )
+
+    input.zipWithIndex.foldLeft(0):
+      case (totalCount, (line, y)) =>
+        totalCount + line.zipWithIndex.foldLeft(0):
+          case (c, (char, x)) =>
+            if char == 'A' then
+              val matches = allOffsets.foldLeft(0):
+                case (count, offsets) =>
+                  val chars = offsets.foldLeft(Set.empty[Char]):
+                    case (chars, (dy, dx)) =>
+                      Either
+                        .catchNonFatal(input(y + dy)(x + dx))
+                        .fold(_ => chars, chars + _)
+
+                  if chars == Set('M', 'S') then count + 1
+                  else count
+              if matches == 2 then c + 1
+              else c
+            else c
