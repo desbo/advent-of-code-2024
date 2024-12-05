@@ -1,6 +1,3 @@
-package aoc
-package twentyfour
-
 import cats.syntax.all.*
 
 object Day4 extends Solution[List[String], Int]:

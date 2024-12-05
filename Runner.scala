@@ -1,11 +1,7 @@
-package aoc
-
-import twentyfour.*
-import cats.Show
-import cats.effect.{IO, IOApp}
+import cats.effect.*
 import cats.syntax.all.*
-
 import java.time.Duration
+import cats.Show
 
 object Runner extends IOApp.Simple:
   val year = 2024
@@ -42,7 +38,7 @@ object Runner extends IOApp.Simple:
         yield ()
       .void
 
-  def runSolution[A](solution: Solution[_, A], input: String): IO[List[(Int, (A, Duration))]] =
+  def runSolution[A](solution: Solution[?, A], input: String): IO[List[(Int, (A, Duration))]] =
     val parsed = solution.parse(input)
 
     def runPart(partNum: Int) =

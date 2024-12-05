@@ -1,6 +1,3 @@
-package aoc
-package twentyfour
-
 object Day3 extends Solution[String, Int]:
   override def parse(input: String): String = input
 

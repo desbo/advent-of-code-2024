@@ -1,6 +1,3 @@
-package aoc
-package twentyfour
-
 object Day2 extends Solution[List[List[Int]], Int]:
   override def parse(input: String): List[List[Int]] =
     input.linesIterator

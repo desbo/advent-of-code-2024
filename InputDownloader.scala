@@ -1,5 +1,3 @@
-package aoc
-
 import cats.effect.IO
 import cats.syntax.all.*
 import os.*

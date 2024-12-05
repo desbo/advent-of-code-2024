@@ -1,8 +1,3 @@
-package aoc
-package twentyfour
-
-import cats.syntax.all.*
-
 object Day5 extends Solution[Day5.Input, Int]:
   case class Input(rules: Set[Rule], pages: List[List[Int]])
   case class Rule(before: Int, after: Int)
