@@ -20,8 +20,6 @@ object Day5 extends Solution[Day5.Input, Int]:
       .foldLeft(Set.empty[Rule]):
         case (rules, (num, idx)) =>
           page.splitAt(idx) match
-            case (before, Nil) =>
-              rules ++ before.tail.map(s => Rule(s, num)).toSet
             case (Nil, after) =>
               rules ++ after.map(a => Rule(num, a))
             case (before, after) =>
@@ -47,6 +45,5 @@ object Day5 extends Solution[Day5.Input, Int]:
   override def part2(input: Input): Int =
     input.pages
       .filterNot(correct(input.rules))
-      .map(sort(input.rules))
-      .map(middle)
+      .map(sort(input.rules).andThen(middle))
       .sum
