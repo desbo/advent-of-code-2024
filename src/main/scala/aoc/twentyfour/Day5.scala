@@ -46,7 +46,7 @@ object Day5 extends Solution[Day5.Input, Int]:
 
   override def part2(input: Input): Int =
     input.pages
-      .filter(r => !correct(input.rules)(r))
+      .filterNot(correct(input.rules))
       .map(sort(input.rules))
       .map(middle)
       .sum
