@@ -16,6 +16,13 @@ object Day6 extends Solution[Day6.Lab, Int]:
   object Down  extends Direction
 
   case class Lab(map: List[String], obstacles: Set[Point], guard: Guard):
+    def render(obstructions: Set[Point]): String =
+      map.zipWithIndex.map: 
+        case (s, y) => s.zipWithIndex.map:
+          case (c, x) => if obstructions.contains(Point(x,y)) then 'O' else c
+        .mkString
+      .mkString("\n")
+
     def addObstruction(p: Point): Lab = copy(obstacles = obstacles + p)
     def obstructed: Boolean           = obstacles.contains(guard.step.position)
     def leaving: Boolean = guard.direction match
@@ -66,7 +73,7 @@ object Day6 extends Solution[Day6.Lab, Int]:
   def cyclic(lab: Lab, visits: Set[(Point, Direction)]): Boolean =
     if lab.leaving then false
     else
-      val nextGuard = if lab.obstructed then lab.guard.turnRight.step else lab.guard.step
+      val nextGuard = if lab.obstructed then lab.guard.turnRight else lab.guard.step
       if visits.contains(nextGuard.position -> nextGuard.direction) then true
       else
         cyclic(
@@ -83,15 +90,14 @@ object Day6 extends Solution[Day6.Lab, Int]:
 
     val route = patrol(lab).guard.visits - lab.guard.position
 
-    Ref
-      .of[IO, Int](0)
-      .flatMap { ref =>
-        route.toList
-          .parTraverse: p =>
-            IO.defer {
-              if cyclic(lab.addObstruction(p), Set.empty) then ref.update(_ + 1)
-              else IO.unit
-            }.start
-          .flatMap(_.traverse(_.join)) >> ref.get
-      }
+    route.toList
+      .traverse: p =>
+        IO {
+          if cyclic(lab.addObstruction(p), Set.empty) then p.some
+          else none
+        }.start
+      .flatMap(_.traverse(_.join.flatMap(_.fold(none.pure[IO], _ => none.pure[IO], identity))))
+      .map(_.flatten.toSet)
+      // .flatTap(obs => IO.println(lab.render(obs)))
+      .map(_.size)
       .unsafeRunSync()
