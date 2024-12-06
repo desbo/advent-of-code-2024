@@ -15,7 +15,8 @@ object Runner extends IOApp.Simple:
     2 -> Day2,
     3 -> Day3,
     4 -> Day4,
-    5 -> Day5
+    5 -> Day5,
+    6 -> Day6
   )
 
   override def run: IO[Unit] =
