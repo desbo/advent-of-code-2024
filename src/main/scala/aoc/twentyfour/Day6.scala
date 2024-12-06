@@ -88,9 +88,10 @@ object Day6 extends Solution[Day6.Lab, Int]:
       .flatMap { ref =>
         route.toList
           .parTraverse: p =>
-            if cyclic(lab.addObstruction(p), Set.empty) then ref.update(_ + 1)
-            else IO.unit
-          .start
-          .flatMap(_.join) >> ref.get
+            IO.defer {
+              if cyclic(lab.addObstruction(p), Set.empty) then ref.update(_ + 1)
+              else IO.unit
+            }.start
+          .flatMap(_.traverse(_.join)) >> ref.get
       }
       .unsafeRunSync()
