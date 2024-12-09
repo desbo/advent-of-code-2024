@@ -11,14 +11,15 @@ object Runner extends IOApp.Simple:
   val year = 2024
 
   val solutionsByDay = Map(
-    1 -> Day1,
-    2 -> Day2,
-    3 -> Day3,
-    4 -> Day4,
-    5 -> Day5,
-//    6 -> Day6,
-    7 -> Day7,
-    8 -> Day8
+//    1 -> Day1,
+//    2 -> Day2,
+//    3 -> Day3,
+//    4 -> Day4,
+//    5 -> Day5,
+////    6 -> Day6,
+//    7 -> Day7,
+//    8 -> Day8,
+    9 -> Day9
   )
 
   override def run: IO[Unit] =
