@@ -13,4 +13,8 @@ class Day9Test extends munit.FunSuite {
       "0099811188827773336446555566.............."
     )
   }
+
+  test("checksum") {
+    assertEquals(Day9.checksum("0099811188827773336446555566.............."), BigInt(1928))
+  }
 }
