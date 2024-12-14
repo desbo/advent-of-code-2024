@@ -3,7 +3,7 @@ package util
 
 import cats.Functor
 
-case class Grid[A](data: List[List[A]]):
+case class Grid[A](data: Vector[Vector[A]]):
   lazy val index: Grid[(A, Vec2)] = Grid[(A, Vec2)]:
     data.zipWithIndex.map:
       case (as, y) =>
@@ -22,7 +22,7 @@ case class Grid[A](data: List[List[A]]):
 
 object Grid:
   def chars(input: String): Grid[Char] =
-    Grid(input.linesIterator.toList.map(_.toList))
+    Grid(input.linesIterator.toVector.map(_.toVector))
 
   given Functor[Grid] with
     override def map[A, B](fa: Grid[A])(f: A => B): Grid[B] =
