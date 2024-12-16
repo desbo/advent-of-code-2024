@@ -9,6 +9,16 @@ object Direction:
   case object Left  extends Direction
   case object Down  extends Direction
 
+  def turn(direction: Direction, turn: Direction.Left.type | Direction.Right.type): Direction =
+    (direction, turn) match
+      case (Up, d)        => d
+      case (Right, Left)  => Up
+      case (Left, Left)   => Down
+      case (Down, Left)   => Right
+      case (Right, Right) => Down
+      case (Left, Right)  => Up
+      case (Down, Right)  => Left
+
   def from(c: Char): Option[Direction] = c match
     case '<' => Left.some
     case 'v' => Down.some
