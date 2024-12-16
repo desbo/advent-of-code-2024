@@ -11,8 +11,6 @@ object Day15 extends Solution[Day15.Input, Long]:
     def robot           = warehouse.positions('@').head
     def dropMove: Input = copy(moves = moves.drop(1))
 
-    def render: String = warehouse.data.map(_.mkString).mkString("\n")
-
     def moveRobot(direction: Direction, boxes: Int = 0): Input =
       val nextPos = robot.offset(direction, boxes + 1)
       warehouse.points.get(nextPos) match
@@ -39,8 +37,8 @@ object Day15 extends Solution[Day15.Input, Long]:
       case Nil    => input
 
   override def part1(input: Input): Long =
-    run(input).warehouse.index
-      .map:
+    run(input).warehouse
+      .positionalMap:
         case ('O', vec) => 100L * vec.y + vec.x
         case _          => 0
       .sumAll
