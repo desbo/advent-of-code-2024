@@ -1,8 +1,8 @@
 package aoc
 package util
 
-import cats.{Eval, Foldable, Functor, Monad, Show}
 import cats.syntax.all.*
+import cats.{Eval, Foldable, Functor, Show}
 
 case class Grid[A](data: Vector[Vector[(A, Vec2)]]):
   lazy val points: Map[Vec2, A] =
