@@ -2,13 +2,10 @@ package aoc.util
 
 import cats.syntax.all.*
 
-sealed trait Direction
-object Direction:
-  case object Up    extends Direction
-  case object Right extends Direction
-  case object Left  extends Direction
-  case object Down  extends Direction
+enum Direction:
+  case Up, Right, Down, Left
 
+object Direction:
   def from(c: Char): Option[Direction] = c match
     case '<' => Left.some
     case 'v' => Down.some
@@ -24,6 +21,13 @@ object Direction:
       case Left  => Vec2(start.x - distance, start.y)
       case Right => Vec2(start.x + distance, start.y)
       case Down  => Vec2(start.x, start.y + distance)
+
+  def diagonal(
+      start: Vec2,
+      v: Up.type | Down.type,
+      h: Left.type | Right.type,
+      distance: Int = 1
+  ): Vec2 = move(move(start, h, distance), v, distance)
 
   def neighbours(from: Vec2, directions: List[Direction] = all, distance: Int = 1): List[Vec2] =
     directions.map: d =>
