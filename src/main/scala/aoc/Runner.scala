@@ -7,9 +7,10 @@ import cats.syntax.all.*
 import java.time.Duration
 
 object Runner extends IOApp.Simple:
+  import twentyfive._
   val year = 2025
 
-  val solutionsByDay = Map(1 -> twentyfive.Day1)
+  val solutionsByDay = Map(1 -> Day1, 2 -> Day2)
 
   override def run: IO[Unit] =
     for
