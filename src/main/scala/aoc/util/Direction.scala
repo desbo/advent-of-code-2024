@@ -32,3 +32,10 @@ object Direction:
   def neighbours(from: Vec2, directions: List[Direction] = all, distance: Int = 1): List[Vec2] =
     directions.map: d =>
       move(from, d, distance)
+
+  def neighbours8(from: Vec2, distance: Int = 1): List[Vec2] =
+    all.flatMap:
+      case Up    => List(move(from, Up, distance), diagonal(from, Up, Left, distance))
+      case Right => List(move(from, Right, distance), diagonal(from, Up, Right, distance))
+      case Down  => List(move(from, Down, distance), diagonal(from, Down, Right, distance))
+      case Left  => List(move(from, Left, distance), diagonal(from, Down, Left, distance))

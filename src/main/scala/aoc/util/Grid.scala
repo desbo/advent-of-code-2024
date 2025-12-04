@@ -14,6 +14,8 @@ case class Grid[A](data: Vector[Vector[(A, Vec2)]]):
   lazy val positions: Map[A, Set[Vec2]] =
     points.groupBy(_._2).view.mapValues(_.keySet).toMap
 
+  def at(pos: Vec2): Option[A] = points.get(pos)
+
   def update(pos: Vec2, a: A): Grid[A] =
     Grid:
       data.updated(pos.y, data(pos.y).updated(pos.x, (a, pos)))
@@ -32,6 +34,11 @@ case class Grid[A](data: Vector[Vector[(A, Vec2)]]):
       .map: vec =>
         vec._1F.map(_.show).mkString
       .mkString("\n")
+
+  def positionalFoldLeft[B](b: B)(f: (B, (Vec2, A)) => B): B =
+    data.foldl(b): (b, vec) =>
+      vec.foldl(b):
+        case (b, (a, xy)) => f(b, (xy, a))
 
 object Grid:
   def chars(input: String): Grid[Char] =
