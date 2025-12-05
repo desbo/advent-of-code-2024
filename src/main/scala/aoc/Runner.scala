@@ -10,7 +10,7 @@ object Runner extends IOApp.Simple:
   import twentyfive._
   val year = 2025
 
-  val solutionsByDay = Map(1 -> Day1, 3 -> Day3, 4 -> Day4)
+  val solutionsByDay = Map(5 -> Day5)
 
   override def run: IO[Unit] =
     for

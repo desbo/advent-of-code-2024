@@ -2,6 +2,7 @@ package aoc.twentyfive
 
 import aoc.Solution
 import aoc.util.{Direction, Grid, Vec2}
+import cats.syntax.all.*
 
 object Day4 extends Solution[Grid[Char], Int]:
   override def parse(input: String): Grid[Char] = Grid.chars(input)
